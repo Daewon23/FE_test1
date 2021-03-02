@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-sidebar
-      title="Money Keeper"
+      title="Money $"
       bg-variant="dark"
       text-variant="light"
       shadow

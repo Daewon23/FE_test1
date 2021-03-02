@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row mt-1">
+    <div class="row mt-4">
       <div class="col-3">
         <Card title="123" />
       </div>
@@ -8,10 +8,10 @@
         <Card title="sdfdsf" />
       </div>
       <div class="col-3">
-        <Card />
+        <Card title="sdfhkjsd" />
       </div>
       <div class="col-3">
-        <Card />
+        <Card title="sdfhkjsd" />
       </div>
     </div>
   </div>

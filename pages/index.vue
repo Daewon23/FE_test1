@@ -8,14 +8,14 @@
         <Card
           title="В долларовом кошельке"
           :amount="getTotalUSD"
-          amount-in-uah="123"
+          :amount-in-uah="getUsdInUah"
         />
       </div>
       <div class="col-3">
         <Card
           title="В евровом кошельке"
           :amount="getTotalInEUR"
-          amount-in-uah="123"
+          :amount-in-uah="getEurToUah"
         />
       </div>
       <div class="col-3">
@@ -37,6 +37,17 @@ export default {
     getTotalInEUR() {
       return this.$store.getters.getTotalInEur + ' евро'
     },
+
+    getUsdInUah() {
+      return this.$store.getters.getFromUsdToUah
+    },
+
+    getEurToUah() {
+      return this.$store.getters.getFromEurToUah
+    },
+  },
+  mounted() {
+    this.$store.dispatch('getRates')
   },
 }
 </script>

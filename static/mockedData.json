@@ -1,0 +1,24 @@
+{
+  "user": {
+    "first_name": "Иван ",
+    "last_name": "Скогарев"
+  },
+  "wallets": [
+    {
+      "type": "UAH",
+      "amount": [10000, 16, 123, 33]
+    },
+    {
+      "type": "EUR",
+      "amount": [10000, 12]
+    },
+    {
+      "type": "USD",
+      "amount": [10000, 18]
+    }
+  ],
+  "totalInWallets": "",
+  "totalInUah": "",
+  "totalInEur": "",
+  "totalInUsd": ""
+}

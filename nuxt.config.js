@@ -41,10 +41,11 @@ export default {
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
     [
-      'nuxt-fontawesome', {
+      'nuxt-fontawesome',
+      {
         imports: [
-         {
-           set: '@fortawesome/free-solid-svg-icons',
+          {
+            set: '@fortawesome/free-solid-svg-icons',
            icons: ['fas']
          },
          {

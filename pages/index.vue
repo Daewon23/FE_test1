@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <div class="row mt-4">
-      <div class="col-3">
+      <div v-for="wallet in getUserWallets" :key="wallet.id" class="col-3">
+        <Card :title="wallet.title" />
+      </div>
+      <!-- <div class="col-3">
         <Card title="В гривневом кошельке" :amount="getTotalUAH" />
       </div>
       <div class="col-3">
@@ -21,6 +24,7 @@
       <div class="col-3">
         <Card title="Общая сумма в грн" />
       </div>
+    </div> -->
     </div>
   </div>
 </template>
@@ -28,6 +32,10 @@
 <script>
 export default {
   computed: {
+    getUserWallets() {
+      return this.$store.state.wallets
+    },
+
     getTotalUAH() {
       return this.$store.getters.getTotalInUah + ' гривен'
     },
@@ -37,17 +45,20 @@ export default {
     getTotalInEUR() {
       return this.$store.getters.getTotalInEur + ' евро'
     },
-
     getUsdInUah() {
       return this.$store.getters.getFromUsdToUah
     },
-
     getEurToUah() {
       return this.$store.getters.getFromEurToUah
+    },
+
+    getTotalByType(type) {
+      return this.$store.getters.getTotalByType(type)
     },
   },
   mounted() {
     this.$store.dispatch('getRates')
+    this.$store.dispatch('getTotals')
   },
 }
 </script>

@@ -42,6 +42,7 @@ export const mutations = {
   UPDATE_STATE(state, payload) {
     state[payload.field] = payload.value
   },
+  UPDATE_TOTALS(state, payload) {},
 }
 
 export const actions = {
@@ -80,6 +81,18 @@ export const actions = {
         field: 'isLoading',
         value: false,
       })
+    }
+  },
+
+  getTotals({ commit, state, getters }) {
+    const Uah = state.wallets.find((i) => i.id === 1)
+
+    const Usd = state.wallets.find((i) => i.id === 2)
+
+    if (Uah) {
+      console.log(getters.getTotalInUah, 'UA')
+    } else if (Usd) {
+      console.log('sdhkj')
     }
   },
 }

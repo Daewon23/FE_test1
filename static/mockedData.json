@@ -5,17 +5,20 @@
   },
   "wallets": [
     {
+      "id": 1,
       "type": "UAH",
-      "amount": [10000, 16, 123, 33]
+      "title": "Гривневый",
+      "amount": [10000, 16, 123, 33],
+      "total": 0
     },
     {
-      "type": "EUR",
-      "amount": [10000, 12]
-    },
-    {
+      "id": 2,
+      "title": "Долларовый",
       "type": "USD",
-      "amount": [10000, 18]
+      "amount": [10000, 12],
+      "total": 0
     }
+  
   ],
   "totalInWallets": "",
   "totalInUah": "",

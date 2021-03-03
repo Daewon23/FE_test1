@@ -1,12 +1,9 @@
 <template>
   <div class="card">
-    {{ title }}
-    <div class="amount">
-      {{ amount }}
-      <div v-if="amountInUah" class="amount-in-uah">
-        {{ amountInUah }} в грн
-      </div>
+    <div class="icon">
+      <Icon prefix="fas" name="wallet" class="icon-wallet" />
     </div>
+    <span>{{ title }}</span>
   </div>
 </template>
 
@@ -18,14 +15,6 @@ export default {
       default: String,
       required: false,
     },
-    amount: {
-      default: Number,
-      required: false,
-    },
-    amountInUah: {
-      default: Number,
-      required: false,
-    },
   },
 }
 </script>
@@ -34,17 +23,14 @@ export default {
 .card {
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   padding: 1em;
-  .amount {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.4em;
-    font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  span {
     font-weight: 500;
-    .amount-in-uah {
-      opacity: 0.5;
-      font-size: 0.8em;
-    }
+  }
+  .icon-wallet {
+    font-size: 2em;
+    color: #ff7f50;
   }
 }
 </style>

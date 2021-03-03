@@ -8,17 +8,8 @@
       "id": 1,
       "type": "UAH",
       "title": "Гривневый",
-      "amount": [10000, 16, 123, 33],
-      "total": 0
-    },
-    {
-      "id": 2,
-      "title": "Долларовый",
-      "type": "USD",
-      "amount": [10000, 12],
-      "total": 0
+      "amount": [0]
     }
-  
   ],
   "totalInWallets": "",
   "totalInUah": "",

@@ -93,12 +93,21 @@ export const actions = {
   addWallet({ commit, state }, payload) {
     // eslint-disable-next-line no-empty
     if (state.wallets.find((i) => i.id === payload.id)) {
+      this._vm.$notify({
+        title: 'Упс, ошибка',
+        text: 'У Вас уже есть такой кошелек!',
+        type: 'warn',
+      })
     } else {
       commit('ADD_NEW_WALLET', {
         id: payload.id,
         title: payload.title,
         type: payload.type,
         amount: payload.amount,
+      })
+      this._vm.$notify({
+        text: 'Кошелек успешно добавлен!',
+        type: 'success',
       })
     }
   },

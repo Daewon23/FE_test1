@@ -2,6 +2,7 @@
   <div>
     <Sidebar />
     <Nuxt />
+    <notifications position="bottom left" duration="-1" />
   </div>
 </template>
 

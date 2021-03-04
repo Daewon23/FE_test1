@@ -3,9 +3,11 @@
     <b-card header="Добавить новый кошелек">
       <div class="wrapper">
         <div class="inputs">
-          <b-form-select
+          <multiselect
             v-model="currencyModel"
             :options="options"
+            track-by="value"
+            label="text"
             placeholder="Валюта"
             class="currency-select"
           />
@@ -27,8 +29,12 @@
 
 <script>
 import { mapActions, mapState, mapMutations } from 'vuex'
+import Multiselect from 'vue-multiselect'
 export default {
   name: 'AddWallet',
+  components: {
+    Multiselect,
+  },
   data() {
     return {
       options: [
@@ -75,9 +81,10 @@ export default {
     ...mapMutations('currency', ['UPDATE_STATE']),
     addNewWallet() {
       this.addWallet({
-        id: this.selectedCurrency,
-        title: this.selectedCurrency === 2 ? 'Долларовый' : 'Евровый',
-        type: this.options.find((i) => i.value === this.selectedCurrency).text,
+        id: this.selectedCurrency.value,
+        title: this.selectedCurrency.id === 2 ? 'Долларовый' : 'Евровый',
+        type: this.options.find((i) => i.value === this.selectedCurrency.value)
+          .text,
         amount: [Number(this.amount)],
       })
     },

@@ -1,3 +1,4 @@
+const path = require('path');
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -21,7 +22,7 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['@/assets/scss/main.scss'],
+  css: ['@/assets/scss/main.scss',path.resolve(__dirname, 'node_modules/vue-multiselect/dist/vue-multiselect.min.css')],
 
   styleResources: {
     scss: ['assets/scss/_variables.scss'],

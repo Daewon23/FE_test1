@@ -3,13 +3,24 @@ import mockedData from '../static/mockedData.json'
 export const state = () => ({
   wallets: mockedData.wallets,
 
-  selectedCurrency: null,
-  amount: null,
+  selectedCurrency: [],
+  amount: 0,
 
   totalInWallets: null,
   currencyRates: null,
 
   isLoading: false,
+
+  currencyOptions: [
+    {
+      value: 2,
+      text: 'EUR',
+    },
+    {
+      value: 3,
+      text: 'USD',
+    },
+  ],
 })
 
 export const getters = {
@@ -23,11 +34,12 @@ export const getters = {
     return getters.getTotalByType('EUR')
   },
   getTotalByType: (state) => (key) => {
-    return state.wallets
-      ? state.wallets
-          .find((i) => i.type === key)
-          .amount.reduce((memo, cur) => memo + cur)
-      : []
+    const currWallet = state.wallets.find((i) => i.type === key)
+    if (currWallet) {
+      return currWallet.amount.reduce((memo, curr) => {
+        return memo + curr
+      })
+    }
   },
   getUsdRate: (state) => (key) => {
     return state.currencyRates
@@ -90,9 +102,9 @@ export const actions = {
     }
   },
 
-  addWallet({ commit, state }, payload) {
+  addWallet({ commit, state }) {
     // eslint-disable-next-line no-empty
-    if (state.wallets.find((i) => i.id === payload.id)) {
+    if (state.wallets.find((i) => i.id === state.selectedCurrency.value)) {
       this._vm.$notify({
         title: 'Упс, ошибка',
         text: 'У Вас уже есть такой кошелек!',
@@ -100,10 +112,12 @@ export const actions = {
       })
     } else {
       commit('ADD_NEW_WALLET', {
-        id: payload.id,
-        title: payload.title,
-        type: payload.type,
-        amount: payload.amount,
+        id: state.selectedCurrency.value,
+        title: state.selectedCurrency.value === 2 ? 'Евровый' : 'Долларовый',
+        type: state.currencyOptions.find(
+          (i) => i.value === state.selectedCurrency.value
+        ).text,
+        amount: [Number(state.amount)],
       })
       this._vm.$notify({
         text: 'Кошелек успешно добавлен!',

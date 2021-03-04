@@ -33,10 +33,10 @@ export default {
     ...mapState('currency', ['wallets']),
 
     checkIfUsdExist() {
-      return !!this.wallets.find((i) => i.id === 2)
+      return !!this.wallets.find((i) => i.id === 3)
     },
     checkIfEurExist() {
-      return !!this.wallets.find((i) => i.id === 3)
+      return !!this.wallets.find((i) => i.id === 2)
     },
   },
 }

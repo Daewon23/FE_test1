@@ -5,7 +5,7 @@
         <div class="inputs">
           <multiselect
             v-model="currencyModel"
-            :options="options"
+            :options="currencyOptions"
             track-by="value"
             label="text"
             placeholder="Валюта"
@@ -35,22 +35,8 @@ export default {
   components: {
     Multiselect,
   },
-  data() {
-    return {
-      options: [
-        {
-          value: 3,
-          text: 'EUR',
-        },
-        {
-          value: 2,
-          text: 'USD',
-        },
-      ],
-    }
-  },
   computed: {
-    ...mapState('currency', ['selectedCurrency', 'amount']),
+    ...mapState('currency', ['selectedCurrency', 'amount', 'currencyOptions']),
 
     currencyModel: {
       get() {
@@ -80,13 +66,7 @@ export default {
     ...mapActions('currency', ['addWallet']),
     ...mapMutations('currency', ['UPDATE_STATE']),
     addNewWallet() {
-      this.addWallet({
-        id: this.selectedCurrency.value,
-        title: this.selectedCurrency.id === 2 ? 'Долларовый' : 'Евровый',
-        type: this.options.find((i) => i.value === this.selectedCurrency.value)
-          .text,
-        amount: [Number(this.amount)],
-      })
+      this.addWallet()
     },
   },
 }

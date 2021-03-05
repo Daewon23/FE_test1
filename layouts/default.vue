@@ -1,8 +1,10 @@
 <template>
   <div>
-    <Sidebar />
+    <Header />
     <Nuxt />
-    <notifications position="bottom left" duration="-1" />
+    <client-only>
+      <notifications position="bottom left" :duration="-1" />
+    </client-only>
   </div>
 </template>
 

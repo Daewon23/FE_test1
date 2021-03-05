@@ -4,13 +4,12 @@ export const state = () => ({
   wallets: mockedData.wallets,
 
   selectedCurrency: [],
-  amount: 0,
-
-  totalInWallets: null,
+  selectedCurrencyToAdd: [],
+  amountToAdd: null,
+  amount: null,
   currencyRates: null,
 
   isLoading: false,
-
   currencyOptions: [
     {
       value: 2,
@@ -62,7 +61,7 @@ export const mutations = {
   ADD_MONEY_TO_WALLET(state, payload) {
     state.wallets.find((i) => i.id === payload.id).total += +payload.amount
   },
-  ADD_TO_ARR(state, payload) {
+  PUSH_TO_AMOUNT_ARR(state, payload) {
     state.wallets.find((i) => i.id === payload.id).amount.push(payload.amount)
   },
 }
@@ -107,7 +106,6 @@ export const actions = {
   },
 
   addWallet({ commit, state }) {
-    // eslint-disable-next-line no-empty
     if (state.wallets.find((i) => i.id === state.selectedCurrency.value)) {
       this._vm.$notify({
         title: 'Упс, ошибка',
@@ -131,9 +129,24 @@ export const actions = {
     }
   },
 
-  addMoney({ commit }, payload) {
-    commit('ADD_MONEY_TO_WALLET', payload)
-    commit('ADD_TO_ARR', payload)
+  addMoney({ commit, state }) {
+    const payload = {
+      id: state.selectedCurrencyToAdd.id,
+      amount: +state.amountToAdd,
+    }
+    if (payload.id && payload.amount) {
+      commit('ADD_MONEY_TO_WALLET', payload)
+      commit('PUSH_TO_AMOUNT_ARR', payload)
+      this._vm.$notify({
+        text: 'Кошелек успешно пополнен!',
+        type: 'success',
+      })
+    } else {
+      this._vm.$notify({
+        text: 'Невозможно пополнить кошелек!',
+        type: 'error',
+      })
+    }
   },
 
   getTotals({ commit, state }) {

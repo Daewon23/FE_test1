@@ -4,15 +4,15 @@
 <script>
 export default {
   props: {
-    // eslint-disable-next-line vue/require-prop-types
     prefix: {
       default: String,
       required: false,
+      type: String,
     },
-    // eslint-disable-next-line vue/require-prop-types
     name: {
       default: String,
       required: false,
+      type: String,
     },
   },
 }

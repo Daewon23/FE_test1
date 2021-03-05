@@ -10,6 +10,7 @@
             label="text"
             placeholder="Валюта"
             class="currency-select"
+            :searchable="false"
           />
           <b-form-input
             v-model="amountModel"

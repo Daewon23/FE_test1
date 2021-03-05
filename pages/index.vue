@@ -21,13 +21,16 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   computed: {
     ...mapState('currency', ['wallets']),
   },
+  methods: {
+    ...mapActions('currency', ['getTotals']),
+  },
   mounted() {
-    this.$store.dispatch('getRates') // TODO moove
+    this.getTotals()
   },
 }
 </script>

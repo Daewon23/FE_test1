@@ -36,9 +36,7 @@ export const getters = {
   getTotalByType: (state) => (key) => {
     const currWallet = state.wallets.find((i) => i.type === key)
     if (currWallet) {
-      return currWallet.amount.reduce((memo, curr) => {
-        return memo + curr
-      })
+      return currWallet.total
     }
   },
   getUsdRate: (state) => (key) => {
@@ -62,6 +60,9 @@ export const mutations = {
     state.wallets.push(payload)
   },
   ADD_MONEY_TO_WALLET(state, payload) {
+    state.wallets.find((i) => i.id === payload.id).total += +payload.amount
+  },
+  ADD_TO_ARR(state, payload) {
     state.wallets.find((i) => i.id === payload.id).amount.push(payload.amount)
   },
 }
@@ -121,6 +122,7 @@ export const actions = {
           (i) => i.value === state.selectedCurrency.value
         ).text,
         amount: [+state.amount],
+        total: state.amount,
       })
       this._vm.$notify({
         text: 'Кошелек успешно добавлен!',
@@ -131,10 +133,20 @@ export const actions = {
 
   addMoney({ commit }, payload) {
     commit('ADD_MONEY_TO_WALLET', payload)
+    commit('ADD_TO_ARR', payload)
   },
 
-  getOut({ commit, getters }) {
-    const a = getters.getTotalInUah
-    console.log(a - 100)
+  getTotals({ commit, state }) {
+    const totals = state.wallets.reduce((memo, cur) => {
+      memo.push({
+        ...cur,
+        total: cur.amount.reduce((m, c) => m + c),
+      })
+      return memo
+    }, [])
+    commit('UPDATE_STATE', {
+      field: 'wallets',
+      value: totals,
+    })
   },
 }

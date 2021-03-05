@@ -8,7 +8,8 @@
       "id": 1,
       "type": "UAH",
       "title": "Гривневый",
-      "amount": [0]
+      "amount": [0],
+      "total": 0
     }
   ],
   "totalInWallets": "",

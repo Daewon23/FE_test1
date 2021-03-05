@@ -61,6 +61,9 @@ export const mutations = {
   ADD_NEW_WALLET(state, payload) {
     state.wallets.push(payload)
   },
+  ADD_MONEY_TO_WALLET(state, payload) {
+    state.wallets.find((i) => i.id === payload.id).amount.push(payload.amount)
+  },
 }
 
 export const actions = {
@@ -117,12 +120,21 @@ export const actions = {
         type: state.currencyOptions.find(
           (i) => i.value === state.selectedCurrency.value
         ).text,
-        amount: [Number(state.amount)],
+        amount: [+state.amount],
       })
       this._vm.$notify({
         text: 'Кошелек успешно добавлен!',
         type: 'success',
       })
     }
+  },
+
+  addMoney({ commit }, payload) {
+    commit('ADD_MONEY_TO_WALLET', payload)
+  },
+
+  getOut({ commit, getters }) {
+    const a = getters.getTotalInUah
+    console.log(a - 100)
   },
 }

@@ -19,7 +19,10 @@
           />
         </div>
         <div class="button">
-          <b-button variant="outline-success" @click="addNewWallet"
+          <b-button
+            variant="outline-success"
+            :disabled="!selectedCurrency || !amount"
+            @click="addNewWallet"
             >Добавить</b-button
           >
         </div>

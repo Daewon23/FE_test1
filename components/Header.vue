@@ -2,7 +2,7 @@
   <div class="container-fluid primary-bg-color">
     <div class="nav-wrapper">
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#"> /></b-navbar-brand>
+        <b-navbar-brand href="#">Money Keeper</b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 

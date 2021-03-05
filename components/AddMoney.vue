@@ -1,6 +1,6 @@
 <template>
   <b-card-group deck>
-    <b-card header="Добавить деньги в кошелек">
+    <b-card header="Пополнить кошелек">
       <div class="wrapper">
         <multiselect
           v-model="modelSelectedCurrencyAdd"
@@ -18,8 +18,11 @@
         />
       </div>
       <div class="button">
-        <b-button variant="outline-success" @click="addMoneyToWallet"
-          >Добавить</b-button
+        <b-button
+          variant="outline-success"
+          :disabled="!amountToAdd || !selectedCurrencyToAdd"
+          @click="addMoneyToWallet"
+          >Пополнить</b-button
         >
       </div>
     </b-card>

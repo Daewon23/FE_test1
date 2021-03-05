@@ -6,16 +6,12 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-5">
         <div class="wallet-wrap">
           <WalletsInfo />
         </div>
       </div>
-      <div class="col-6">
-        <div class="wallet-wrap">
-          <AddWallet />
-        </div>
-      </div>
+      <div class="col-6"></div>
     </div>
   </div>
 </template>

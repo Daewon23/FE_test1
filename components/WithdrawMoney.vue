@@ -17,7 +17,10 @@
       />
     </div>
     <div class="button">
-      <b-button variant="outline-primary" @click="withdrawMoneyFromWallet"
+      <b-button
+        :disabled="!selectedCurrencyToWithDraw || !amountToWithDraw"
+        variant="outline-primary"
+        @click="withdrawMoneyFromWallet"
         >Вывести</b-button
       >
     </div>

@@ -4,8 +4,13 @@ export const state = () => ({
   wallets: mockedData.wallets,
 
   selectedCurrency: [],
+
   selectedCurrencyToAdd: [],
   amountToAdd: null,
+
+  selectedCurrencyToWithDraw: [],
+  amountToWithDraw: null,
+
   amount: null,
   currencyRates: null,
 
@@ -60,6 +65,9 @@ export const mutations = {
   },
   ADD_MONEY_TO_WALLET(state, payload) {
     state.wallets.find((i) => i.id === payload.id).total += +payload.amount
+  },
+  WITHDRAW_FROM_WALLET(state, payload) {
+    state.wallets.find((i) => i.id === payload.id).total -= +payload.amount
   },
   PUSH_TO_AMOUNT_ARR(state, payload) {
     state.wallets.find((i) => i.id === payload.id).amount.push(payload.amount)
@@ -129,7 +137,7 @@ export const actions = {
     }
   },
 
-  addMoney({ commit, state }) {
+  addMoney({ commit, dispatch, state }) {
     const payload = {
       id: state.selectedCurrencyToAdd.id,
       amount: +state.amountToAdd,
@@ -137,6 +145,7 @@ export const actions = {
     if (payload.id && payload.amount) {
       commit('ADD_MONEY_TO_WALLET', payload)
       commit('PUSH_TO_AMOUNT_ARR', payload)
+      dispatch('getTotals')
       this._vm.$notify({
         text: 'Кошелек успешно пополнен!',
         type: 'success',
@@ -147,6 +156,28 @@ export const actions = {
         type: 'error',
       })
     }
+  },
+
+  withdrawMoney({ commit, state }) {
+    const payload = {
+      id: state.selectedCurrencyToWithDraw.id,
+      amount: +state.amountToWithDraw,
+    }
+    const currentWalletTotal = state.wallets.find((i) => i.id === payload.id)
+      .total
+
+    if (payload.amount > currentWalletTotal) {
+      this._vm.$notify({
+        text: 'В кошельке недостаточно денег ',
+        type: 'error',
+      })
+      return false
+    }
+    commit('WITHDRAW_FROM_WALLET', payload)
+    this._vm.$notify({
+      text: 'Успешно снято!',
+      type: 'success',
+    })
   },
 
   getTotals({ commit, state }) {

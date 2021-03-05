@@ -73,13 +73,4 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.currency-select {
-  margin-bottom: 0.5em;
-}
-.button {
-  display: flex;
-  justify-content: center;
-  margin-top: 0.5em;
-}
-</style>
+<style lang="scss"></style>

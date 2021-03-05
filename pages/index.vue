@@ -29,9 +29,6 @@ export default {
   methods: {
     ...mapActions('currency', ['getTotals']),
   },
-  mounted() {
-    this.getTotals()
-  },
 }
 </script>
 

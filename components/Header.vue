@@ -2,7 +2,7 @@
   <div class="container-fluid primary-bg-color">
     <div class="nav-wrapper">
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#">NavBar</b-navbar-brand>
+        <b-navbar-brand href="#"> /></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -11,6 +11,9 @@
             <b-nav-item><nuxt-link to="/">Dashboard</nuxt-link></b-nav-item>
             <b-nav-item
               ><nuxt-link to="/actions">Действия</nuxt-link></b-nav-item
+            >
+            <b-nav-item
+              ><nuxt-link to="/">История действий</nuxt-link></b-nav-item
             >
           </b-navbar-nav>
 

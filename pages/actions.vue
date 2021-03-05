@@ -4,6 +4,9 @@
       <div class="col-6">
         <AddMoney />
       </div>
+      <div class="col-6">
+        <WithdrawMoney />
+      </div>
     </div>
   </div>
 </template>

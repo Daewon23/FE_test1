@@ -1,3 +1,4 @@
+import config from '../static/config'
 import mockedData from '../static/mockedData.json'
 
 export const state = () => ({
@@ -17,11 +18,11 @@ export const state = () => ({
   isLoading: false,
   currencyOptions: [
     {
-      value: 2,
+      value: config.EUR_VALUE,
       text: 'EUR',
     },
     {
-      value: 3,
+      value: config.USD_VALUE,
       text: 'USD',
     },
   ],
@@ -141,7 +142,7 @@ export const actions = {
         amount: [+state.amount],
         total: state.amount,
       })
-      dispatch({ type: 'history/newWalletAction' }, { root: true })
+      this.dispatch('history/newWalletAction')
       this._vm.$notify({
         text: 'Кошелек успешно добавлен!',
         type: 'success',
@@ -162,7 +163,7 @@ export const actions = {
         text: 'Кошелек успешно пополнен!',
         type: 'success',
       })
-      dispatch({ type: 'history/addMoneyAction' }, { root: true })
+      this.dispatch('history/addMoneyAction')
     } else {
       this._vm.$notify({
         text: 'Невозможно пополнить кошелек!',
@@ -171,7 +172,7 @@ export const actions = {
     }
   },
 
-  withdrawMoney({ commit, state }) {
+  withdrawMoney({ commit, dispatch, state }) {
     const payload = {
       id: state.selectedCurrencyToWithDraw.id,
       amount: +state.amountToWithDraw,
@@ -187,6 +188,7 @@ export const actions = {
       return false
     }
     commit('WITHDRAW_FROM_WALLET', payload)
+    this.dispatch('history/withdrawMoneyAction')
     this._vm.$notify({
       text: 'Успешно снято!',
       type: 'success',

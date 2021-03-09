@@ -4,7 +4,7 @@ export const state = () => ({
 
 export const mutations = {
   PUSH_TO_HISTORY(state, payload) {
-    state.history.push(payload)
+    state.history.unshift(payload)
   },
 }
 
@@ -13,7 +13,11 @@ export const getters = {
     return new Date().toLocaleDateString()
   },
   getCurrentTime() {
-    return new Date().toLocaleTimeString()
+    return new Date().toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    })
+    // TODO Vitalya
   },
 }
 
@@ -21,7 +25,9 @@ export const actions = {
   newWalletAction({ commit, getters, rootState, rootGetters }) {
     commit('PUSH_TO_HISTORY', {
       id: rootState.currency.selectedCurrency.value,
-      reason: `Добавлен новый ${rootGetters['currency/getWalletCurrencyName']} кошелек`,
+      reason: `Добавлен новый ${rootGetters[
+        'currency/getWalletCurrencyName'
+      ].toLowerCase()} кошелек`,
       amount: rootState.currency.amount,
       date: getters.getCurrentDate,
       time: getters.getCurrentTime,
@@ -30,8 +36,17 @@ export const actions = {
   addMoneyAction({ commit, getters, rootState, rootGetters }) {
     commit('PUSH_TO_HISTORY', {
       id: rootState.currency.selectedCurrencyToAdd.id,
-      reason: `Пополнен ${rootGetters['currency/getWalletCurrencyName']} кошелек`,
+      reason: `Пополнен ${rootState.currency.selectedCurrencyToAdd.title.toLowerCase()} кошелек`,
       amount: rootState.currency.amountToAdd,
+      date: getters.getCurrentDate,
+      time: getters.getCurrentTime,
+    })
+  },
+  withdrawMoneyAction({ commit, getters, rootState, rootGetters }) {
+    commit('PUSH_TO_HISTORY', {
+      id: rootState.currency.selectedCurrencyToWithDraw.id,
+      reason: `Выведено с кошелька - ${rootState.currency.selectedCurrencyToWithDraw.title.toLowerCase()}`,
+      amount: rootState.currency.amountToWithDraw,
       date: getters.getCurrentDate,
       time: getters.getCurrentTime,
     })

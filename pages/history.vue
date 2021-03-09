@@ -17,8 +17,8 @@ export default {
       fields: [
         { key: 'date', label: 'Дата' },
         { key: 'time', label: 'Время' },
-        { key: 'amount', label: 'Сумма' },
-        { key: 'reason', label: 'Действие' },
+        { key: 'amount', label: 'Сумма', sortable: true },
+        { key: 'reason', label: 'Действие', sortable: true },
       ],
     }
   },
@@ -30,3 +30,13 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.empty-history {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 1.7em;
+  font-weight: 500;
+}
+</style>

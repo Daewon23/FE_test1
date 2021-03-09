@@ -54,6 +54,17 @@ export const getters = {
   getFromEurToUah: (state, getters) => {
     return Math.round(getters.getTotalInUsd * getters.getUsdRate('EUR'))
   },
+  getWalletCurrencyName: (state) => {
+    let name = null
+    if (state.selectedCurrency.value === 2) {
+      name = 'Евровый'
+    } else if (state.selectedCurrency.value === 3) {
+      name = 'Долларовый'
+    } else {
+      name = 'Гривневый'
+    }
+    return name
+  },
 }
 
 export const mutations = {
@@ -113,7 +124,7 @@ export const actions = {
     }
   },
 
-  addWallet({ commit, state }) {
+  addWallet({ commit, dispatch, state, getters }) {
     if (state.wallets.find((i) => i.id === state.selectedCurrency.value)) {
       this._vm.$notify({
         title: 'Упс, ошибка',
@@ -123,13 +134,14 @@ export const actions = {
     } else {
       commit('ADD_NEW_WALLET', {
         id: state.selectedCurrency.value,
-        title: state.selectedCurrency.value === 2 ? 'Евровый' : 'Долларовый',
+        title: getters.getWalletCurrencyName,
         type: state.currencyOptions.find(
           (i) => i.value === state.selectedCurrency.value
         ).text,
         amount: [+state.amount],
         total: state.amount,
       })
+      dispatch({ type: 'history/newWalletAction' }, { root: true })
       this._vm.$notify({
         text: 'Кошелек успешно добавлен!',
         type: 'success',
@@ -150,6 +162,7 @@ export const actions = {
         text: 'Кошелек успешно пополнен!',
         type: 'success',
       })
+      dispatch({ type: 'history/addMoneyAction' }, { root: true })
     } else {
       this._vm.$notify({
         text: 'Невозможно пополнить кошелек!',

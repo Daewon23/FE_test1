@@ -13,7 +13,7 @@
               ><nuxt-link to="/actions">Действия</nuxt-link></b-nav-item
             >
             <b-nav-item
-              ><nuxt-link to="/">История действий</nuxt-link></b-nav-item
+              ><nuxt-link to="/history">История действий</nuxt-link></b-nav-item
             >
           </b-navbar-nav>
 

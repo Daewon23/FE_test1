@@ -18,11 +18,11 @@ export const state = () => ({
   isLoading: false,
   currencyOptions: [
     {
-      value: config.EUR_VALUE,
+      value: config.EUR_ID,
       text: 'EUR',
     },
     {
-      value: config.USD_VALUE,
+      value: config.USD_ID,
       text: 'USD',
     },
   ],
@@ -30,19 +30,19 @@ export const state = () => ({
 
 export const getters = {
   getTotalInUah: (state, getters) => {
-    return getters.getTotalByType('UAH')
+    return getters.getTotalByType(config.UAH_ID)
   },
   getTotalInUsd: (state, getters) => {
-    return getters.getTotalByType('USD')
+    return getters.getTotalByType(config.USD_ID)
   },
   getTotalInEur: (state, getters) => {
-    return getters.getTotalByType('EUR')
+    return getters.getTotalByType(config.EUR_ID)
   },
   getTransactions: (state) => (key) => {
     return state.wallets.find((i) => i.id === key).transactions
   },
-  getTotalByType: (state) => (key) => {
-    const currWallet = state.wallets.find((i) => i.type === key)
+  getTotalByType: (state) => (id) => {
+    const currWallet = state.wallets.find((i) => i.id === id)
     if (currWallet) {
       return currWallet.total
     }

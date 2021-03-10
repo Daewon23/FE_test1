@@ -84,6 +84,12 @@ export const mutations = {
   PUSH_TO_AMOUNT_ARR(state, payload) {
     state.wallets.find((i) => i.id === payload.id).amount.push(payload.amount)
   },
+  CHANGE_AMOUNT_VALUE(state, payload) {
+    const currWallet = state.wallets.find((i) => i.id === payload.id)
+    const findeAmountIndex = currWallet.amount.findIndex(
+      (i) => i === +payload.amount
+    )
+  },
 }
 
 export const actions = {

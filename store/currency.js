@@ -38,6 +38,9 @@ export const getters = {
   getTotalInEur: (state, getters) => {
     return getters.getTotalByType('EUR')
   },
+  getTransactions: (state) => (key) => {
+    return state.wallets.find((i) => i.id === key).transactions
+  },
   getTotalByType: (state) => (key) => {
     const currWallet = state.wallets.find((i) => i.type === key)
     if (currWallet) {
@@ -81,14 +84,8 @@ export const mutations = {
   WITHDRAW_FROM_WALLET(state, payload) {
     state.wallets.find((i) => i.id === payload.id).total -= +payload.amount
   },
-  PUSH_TO_AMOUNT_ARR(state, payload) {
-    state.wallets.find((i) => i.id === payload.id).amount.push(payload.amount)
-  },
-  CHANGE_AMOUNT_VALUE(state, payload) {
-    const currWallet = state.wallets.find((i) => i.id === payload.id)
-    const findeAmountIndex = currWallet.amount.findIndex(
-      (i) => i === +payload.amount
-    )
+  PUSH_TO_TRANSACTIONS_ARR(state, payload) {
+    state.wallets.find((i) => i.id === payload.id).transactions.push(payload)
   },
 }
 
@@ -145,8 +142,14 @@ export const actions = {
         type: state.currencyOptions.find(
           (i) => i.value === state.selectedCurrency.value
         ).text,
-        amount: [+state.amount],
         total: state.amount,
+        transactions: [
+          {
+            amount: +state.amount,
+            id: state.selectedCurrency.value,
+            reason: 'newWallet',
+          },
+        ],
       })
       this.dispatch('history/newWalletAction')
       this._vm.$notify({
@@ -160,10 +163,15 @@ export const actions = {
     const payload = {
       id: state.selectedCurrencyToAdd.id,
       amount: +state.amountToAdd,
+      reason: 'addMoney',
+      hash: 'simplestring'.split('').reduce(function (a, b) {
+        a = (a << 5) - a + b.charCodeAt(0)
+        return a & a
+      }, 0),
     }
     if (payload.id && payload.amount) {
       commit('ADD_MONEY_TO_WALLET', payload)
-      commit('PUSH_TO_AMOUNT_ARR', payload)
+      commit('PUSH_TO_TRANSACTIONS_ARR', payload)
       dispatch('getTotals')
       this._vm.$notify({
         text: 'Кошелек успешно пополнен!',
@@ -182,6 +190,11 @@ export const actions = {
     const payload = {
       id: state.selectedCurrencyToWithDraw.id,
       amount: +state.amountToWithDraw,
+      reason: 'withdrawMoney',
+      hash: 'simplestring'.split('').reduce(function (a, b) {
+        a = (a << 5) - a + b.charCodeAt(0)
+        return a & a
+      }, 0),
     }
     const currentWalletTotal = state.wallets.find((i) => i.id === payload.id)
       .total
@@ -194,6 +207,7 @@ export const actions = {
       return false
     }
     commit('WITHDRAW_FROM_WALLET', payload)
+    commit('PUSH_TO_TRANSACTIONS_ARR', payload)
     this.dispatch('history/withdrawMoneyAction')
     this._vm.$notify({
       text: 'Успешно снято!',
@@ -205,7 +219,10 @@ export const actions = {
     const totals = state.wallets.reduce((memo, cur) => {
       memo.push({
         ...cur,
-        total: cur.amount.reduce((m, c) => m + c),
+        total: cur.transactions.reduce((m, c) => {
+          m = c.amount + m
+          return m
+        }, 0),
       })
       return memo
     }, [])

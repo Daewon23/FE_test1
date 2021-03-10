@@ -42,6 +42,9 @@ export const actions = {
       amount: rootState.currency.amountToAdd,
       date: getters.getCurrentDate,
       time: getters.getCurrentTime,
+      transactions: rootGetters['currency/getTransactions'](
+        rootState.currency.selectedCurrencyToAdd.id
+      ),
     })
   },
   withdrawMoneyAction({ commit, getters, rootState, rootGetters }) {
@@ -52,13 +55,11 @@ export const actions = {
       amount: rootState.currency.amountToWithDraw,
       date: getters.getCurrentDate,
       time: getters.getCurrentTime,
+      transactions: rootGetters['currency/getTransactions'](
+        rootState.currency.selectedCurrencyToWithDraw.id
+      ),
     })
   },
 
-  editHistoryAmount({ commit, rootState }, payload) {
-    this.commit('currency/CHANGE_AMOUNT_VALUE', {
-      id: +payload.id,
-      amount: +payload.amount,
-    })
-  },
+  editHistoryAmount({ commit, rootState }, payload) {},
 }

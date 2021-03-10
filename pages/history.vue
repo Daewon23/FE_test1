@@ -34,6 +34,7 @@ export default {
   },
   computed: {
     ...mapState('history', ['history']),
+    ...mapState('currency', ['amountToAdd']),
   },
   methods: {
     ...mapActions('history', ['setHistory', 'editHistoryAmount']),
@@ -43,7 +44,7 @@ export default {
         return false
       }
 
-      this.editHistoryAmount({ id: item.id, amount: item.amount })
+      // this.editHistoryAmount({ id: item.id, amount: item.amount })
     },
   },
 }

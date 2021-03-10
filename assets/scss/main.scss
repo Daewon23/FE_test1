@@ -1,8 +1,11 @@
 a{
     color: #fff;
+    opacity: .8;
+    transition: 0.3s;
     &:hover{
         text-decoration: none;
         color: #fff;
+        opacity: 1;
     }
 
 }.currency-select {

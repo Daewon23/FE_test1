@@ -1,9 +1,9 @@
-import { Line } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 import Vue from 'vue'
 
-Vue.component('Chart', {
-  extends: Line,
-  props: ['options', 'data'],
+Vue.component('MyChart', {
+  extends: Bar,
+  props: ['options', 'data', 'dataset'],
   mounted() {
     this.renderChart(this.data, this.options, this.label)
   },

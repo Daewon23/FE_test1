@@ -30,17 +30,46 @@ export const state = () => ({
 
 export const getters = {
   getTotalInUah: (state, getters) => {
-    return getters.getTotalByType(config.UAH_ID)
+    return getters.getTotalByType(config.UAH_ID) || 0
   },
   getTotalInUsd: (state, getters) => {
-    return getters.getTotalByType(config.USD_ID)
+    return getters.getTotalByType(config.USD_ID) || 0
   },
   getTotalInEur: (state, getters) => {
-    return getters.getTotalByType(config.EUR_ID)
+    return getters.getTotalByType(config.EUR_ID) || 0
   },
   getTransactions: (state) => (key) => {
     return state.wallets.find((i) => i.id === key).transactions
   },
+
+  getUAH: (state, getters) => {
+    return getters.getTransactions(1).reduce((memo, cur) => {
+      memo.push(cur.amount)
+      return memo
+    }, [])
+  },
+
+  // getUSD: (state, getters) => {
+  //   return getters.getTransactions(2).reduce((memo, cur) => {
+  //     memo.push(cur.amount)
+  //     return memo
+  //   }, [])
+  // },
+
+  chartData: (state, getters) => {
+    const data = {
+      datasets: [
+        {
+          label: 'Поступления UAH',
+          data: getters.getUAH,
+          fill: false,
+          borderColor: 'yellow',
+        },
+      ],
+    }
+    return data
+  },
+
   getTotalByType: (state) => (id) => {
     const currWallet = state.wallets.find((i) => i.id === id)
     if (currWallet) {
@@ -142,6 +171,7 @@ export const actions = {
         type: state.currencyOptions.find(
           (i) => i.value === state.selectedCurrency.value
         ).text,
+        amount: [+state.amount],
         total: state.amount,
         transactions: [
           {
@@ -164,7 +194,8 @@ export const actions = {
       id: state.selectedCurrencyToAdd.id,
       amount: +state.amountToAdd,
       reason: 'addMoney',
-      hash: 'simplestring'.split('').reduce(function (a, b) {
+      data: new Date().toLocaleTimeString(),
+      hash: 'simplestring'.split('').reduce((a, b) => {
         a = (a << 5) - a + b.charCodeAt(0)
         return a & a
       }, 0),
@@ -191,7 +222,7 @@ export const actions = {
       id: state.selectedCurrencyToWithDraw.id,
       amount: +state.amountToWithDraw,
       reason: 'withdrawMoney',
-      hash: 'simplestring'.split('').reduce(function (a, b) {
+      hash: 'simplestring'.split('').reduce((a, b) => {
         a = (a << 5) - a + b.charCodeAt(0)
         return a & a
       }, 0),

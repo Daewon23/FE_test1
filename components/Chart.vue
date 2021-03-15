@@ -1,6 +1,6 @@
 <template>
   <div>
-    <my-line :data="data" />
+    <my-chart :data="data" />
   </div>
 </template>
 

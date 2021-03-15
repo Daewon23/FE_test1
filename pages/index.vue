@@ -12,38 +12,21 @@
         </div>
       </div>
       <div class="col-6">
-        <Chart :data="ChartData" />
+        <Chart :data="chartData" />
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 export default {
   data() {
-    return {
-      ChartData: {
-        labels: ['A', 'B', 'C', 'D', 'E'],
-        datasets: [
-          {
-            label: 'Поступления',
-            data: [10, 50, 30, 41, 3],
-            fill: false,
-            borderColor: 'red',
-          },
-          {
-            label: 'Траты',
-            data: [100, 50, 30, 40, 30],
-            borderColor: '#bae755',
-            fill: false,
-          },
-        ],
-      },
-    }
+    return {}
   },
   computed: {
     ...mapState('currency', ['wallets']),
+    ...mapGetters('currency', ['chartData']),
   },
   methods: {
     ...mapActions('currency', ['getTotals']),

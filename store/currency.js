@@ -42,28 +42,24 @@ export const getters = {
     return state.wallets.find((i) => i.id === key).transactions
   },
 
-  getUAH: (state, getters) => {
-    return getters.getTransactions(1).reduce((memo, cur) => {
-      memo.push(cur.amount)
+  getWalletsTitleForChart: (state) => {
+    return state.wallets.reduce((memo, cur) => {
+      memo.push(cur.type)
       return memo
     }, [])
   },
 
-  // getUSD: (state, getters) => {
-  //   return getters.getTransactions(2).reduce((memo, cur) => {
-  //     memo.push(cur.amount)
-  //     return memo
-  //   }, [])
-  // },
-
   chartData: (state, getters) => {
     const data = {
+      labels: getters.getWalletsTitleForChart,
       datasets: [
         {
-          label: 'Поступления UAH',
-          data: getters.getUAH,
-          fill: false,
-          borderColor: 'yellow',
+          backgroundColor: ['#cdcdc7', '#228B22', '#df8d49'],
+          data: [
+            getters.getTotalInUah,
+            getters.getTotalInUsd,
+            +getters.getTotalInEur,
+          ],
         },
       ],
     }

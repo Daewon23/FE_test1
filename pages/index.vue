@@ -5,13 +5,13 @@
         <Card :title="wallet.title" />
       </div>
     </div>
-    <div class="row">
+    <div class="row mt-5">
       <div class="col-5">
         <div class="wallet-wrap">
           <WalletsInfo />
         </div>
       </div>
-      <div class="col-6">
+      <div v-if="wallets.length >= 2" class="col-5">
         <Chart :data="chartData" />
       </div>
     </div>
